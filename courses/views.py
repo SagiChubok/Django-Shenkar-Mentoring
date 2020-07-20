@@ -27,12 +27,12 @@ def homepage(request):
             return redirect('show_courses')
         elif group == "Student":
             return redirect('search_courses')
-    else:        
+    else:
         return render(request, 'courses/index.html')
 
 def login_user(request):
     if request.method == "POST":
-        username = request.POST.get('username', '')     
+        username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         user = authenticate(username=username, password=password)
         if user:
@@ -45,7 +45,7 @@ def login_user(request):
         else:
           messages.info(request,"שם משתמש או סיסמא לא תקינים")
 
-    return render(request, 'courses/index.html')    
+    return render(request, 'courses/index.html')
 
 def register_user(request):
     if request.method == "POST":
@@ -61,14 +61,14 @@ def register_user(request):
                 newMentor = Mentor(user = newUser,fullName = request.POST.get('fullName','') ,phone = request.POST.get('phone','') )
                 newMentor.save()
                 newUser.groups.add(Group.objects.get(name = 'Mentor'))
-                
-            elif userType == "סטודנט":     
+
+            elif userType == "סטודנט":
                 newStudent = Student(user = newUser,fullName = request.POST.get('fullName','') ,phone = request.POST.get('phone','') )
                 newStudent.save()
                 newUser.groups.add(Group.objects.get(name = 'Student'))
-     
+
             messages.success(request,"נרשמת בהצלחה למערכת")
-            
+
         else:
             messages.error(request,"מייל או שם משתמש כבר תפוסים")
 
@@ -76,7 +76,7 @@ def register_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('homepage')   
+    return redirect('homepage')
 
 
 #PROFILE
@@ -87,15 +87,15 @@ def show_profile(request, user_id):
         if mentor:
             courses = Course.objects.filter(mentor = mentor)
             args = {'user': mentor , 'courses':courses}
-            return render(request, 'courses/show_profile.html', args )  
+            return render(request, 'courses/show_profile.html', args )
     except:
         student = get_object_or_404(Student, user = user_id)
         args =  {'user': student}
-        return render(request, 'courses/show_profile.html', args)     
+        return render(request, 'courses/show_profile.html', args)
 
 @login_required(login_url = "homepage")
 def edit_profile(request):
-    return render(request, 'courses/edit_profile.html')    
+    return render(request, 'courses/edit_profile.html')
 
 def update_profile(request):
     group = request.user.groups.all()[0].name
@@ -115,24 +115,24 @@ def update_profile(request):
 
         request.user.email = request.GET.get('inputEmail','')
         request.user.save()
-        
+
     return redirect('show_profile', request.user.id)
 
 
 #COURSES
-def get_courses(request):  
+def get_courses(request):
     courses = Course.objects.filter(~Q(currentIntersted=F('maxInterested'))).order_by('-datePublished')
     args =  {'courses':list(courses.values()) }
     return JsonResponse(args)
 
-def get_mentor(request, mentor_id, course_id):  
+def get_mentor(request, mentor_id, course_id):
     mentor = Mentor.objects.get(id = mentor_id)
     course = Course.objects.get(id = course_id)
     flag = -1
     try:
         found = InterestedStudent.objects.get(Student = request.user.student , Course = course)
         if found:
-            flag = 1 
+            flag = 1
     except:
         flag = 0
 
@@ -144,13 +144,13 @@ def show_courses(request):
     try:
         courses = Course.objects.filter(mentor = request.user.mentor ).order_by('-id')
         args =  {'courses':courses}
-        return render(request, 'courses/show_courses.html', args)  
+        return render(request, 'courses/show_courses.html', args)
     except:
-        return render(request, 'courses/show_courses.html')  
+        return render(request, 'courses/show_courses.html')
 
 @login_required(login_url="homepage")
 @student_only
-def search_courses(request):  
+def search_courses(request):
     return render(request, 'courses/search_courses.html')
 
 
@@ -160,7 +160,7 @@ def add_course(request):
     course = request.GET.get('stdcrs','')
     try:
         duplicate = Course.objects.get(mentor = request.user.mentor , courseName = course)
-        messages.error(request,"לא ניתן להוסיף את אותו קורס בשנית")
+        messages.error(request,"לא ניתן להוסיף את אותו הקורס בשנית")
     except:
         if year != "" and course != "":
             courseimg = ""
@@ -168,100 +168,101 @@ def add_course(request):
                 courseimg = "../static/images/courses-cover/math.jpg"
 
             elif course == "פיסיקה 1":
-                courseimg = "../static/images/courses-cover/physics.jpg"   
+                courseimg = "../static/images/courses-cover/physics.jpg"
 
             elif course == "תכנות 1 - מבוא":
-                courseimg = "../static/images/courses-cover/introduction-programming.jpg.jpg"   
+                courseimg = "../static/images/courses-cover/introduction-programming.jpg"
 
             elif course == "מערכות סיפרתיות":
-                courseimg = "../static/images/courses-cover/digital-systems.jpg"                     
+                courseimg = "../static/images/courses-cover/digital-systems.jpg"
 
             elif course == "הנדסת חשמל למהנדסי תוכנה":
-                courseimg = "../static/images/courses-cover/electricity.jpg"   
+                courseimg = "../static/images/courses-cover/electricity.jpg"
 
             elif course == "ארגון ותכנות המחשב" or course == "תכן לוגי":
-                courseimg = "../static/images/courses-cover/assembly.jpg"  
-                    
+                courseimg = "../static/images/courses-cover/assembly.jpg"
+
             elif course == "תכנות 2 - תכנות מערכות" or course == "תכנות 3 - תכנות מונחה עצמים" or course == "ניתוח ותיכון מונחה עצמים" or course == "שיטות בהנדסת תוכנה":
-                courseimg = "../static/images/courses-cover/programming.jpg"         
+                courseimg = "../static/images/courses-cover/programming.jpg"
 
             elif course == "אלגברה לינארית":
-                courseimg = "../static/images/courses-cover/linear-algebra.jpg"   
+                courseimg = "../static/images/courses-cover/linear-algebra.jpg"
 
             elif course == "עיצוב ממשקי משתמש":
-                courseimg = "../static/images/courses-cover/HCI.jpg"   
+                courseimg = "../static/images/courses-cover/HCI.jpg"
 
             elif course == "מבוא לסטטיסטיקה והסתברות":
-                courseimg = "../static/images/courses-cover/statistics.jpg"                   
+                courseimg = "../static/images/courses-cover/statistics.jpg"
 
             elif course == "מבנה מחשבים":
-                courseimg = "../static/images/courses-cover/computer-architecture.jpg"   
+                courseimg = "../static/images/courses-cover/computer-architecture.jpg"
 
             elif course == "מבני נתונים" or course == "מבוא לאלגוריתמים":
-                courseimg = "../static/images/courses-cover/data_structure_algorithms.jpg"   
+                courseimg = "../static/images/courses-cover/data_structure_algorithms.jpg"
 
             elif course == "מתמטיקה בדידה וקומבינטוריקה" or course == "לוגיקה מתמטית ותורת הקבוצות":
-                courseimg = "../static/images/courses-cover/discrete-math.jpg.jpg"  
-                    
+                courseimg = "../static/images/courses-cover/discrete-math.jpg"
+
             elif course == "אנגלית טכנית":
-                courseimg = "../static/images/courses-cover/english.jpg"  
+                courseimg = "../static/images/courses-cover/english.jpg"
 
             elif course == "מבוא להנדסת ווב וענן":
-                courseimg = "../static/images/courses-cover/web-and-cloud.jpg"  
+                courseimg = "../static/images/courses-cover/web-and-cloud.jpg"
 
             elif course == "בינה מלאכותית":
-                courseimg = "../static/images/courses-cover/AI.jpg"                   
+                courseimg = "../static/images/courses-cover/AI.jpg"
 
             elif course == "מבוא למערכות חכמות":
-                courseimg = "../static/images/courses-cover/iot.jpg"   
+                courseimg = "../static/images/courses-cover/iot.jpg"
 
             elif course == "מערכות קבצים ומסדי נתונים":
-                courseimg = "../static/images/courses-cover/database.jpg"   
-                    
+                courseimg = "../static/images/courses-cover/database.jpg"
+
             elif course == "ג'אווה":
-                courseimg = "../static/images/courses-cover/java.jpg"  
+                courseimg = "../static/images/courses-cover/java.jpg"
 
             elif course == "תקשורת ותקשוב":
-                courseimg = "../static/images/courses-cover/ict.jpg"   
+                courseimg = "../static/images/courses-cover/ict.jpg"
 
             elif course == "מארג האינטרנט":
-                courseimg = "../static/images/courses-cover/mern-stack.jpg"   
+                courseimg = "../static/images/courses-cover/mern-stack.jpg"
 
             elif course == "אוטומטים וקומפילציה":
-                courseimg = "../static/images/courses-cover/automata.jpg"  
+                courseimg = "../static/images/courses-cover/automata.jpg"
 
             elif course == "מערכות הפעלה":
-                courseimg = "../static/images/courses-cover/operating-system.jpg"                   
+                courseimg = "../static/images/courses-cover/operating-system.jpg"
 
             elif course == "תכנות פייתון למהנדסים":
-                courseimg = "../static/images/courses-cover/python.jpg"   
+                courseimg = "../static/images/courses-cover/python.jpg"
 
             elif course == "סמינר פרויקט גמר - 1" or course == "סמינר פרויקט גמר - 2"  or course == "סמינר בהנדסת תוכנה":
-                courseimg = "../static/images/courses-cover/software-engineering.jpg"  
-                    
+                courseimg = "../static/images/courses-cover/software-engineering.jpg"
+
             elif course == "מערכות מחשב מקביליות":
-                courseimg = "../static/images/courses-cover/parallel-computing.jpg"  
+                courseimg = "../static/images/courses-cover/parallel-computing.jpg"
 
             elif course == "חישוביות סיבוכיות ושפות פורמליות":
-                courseimg = "../static/images/courses-cover/formal-languages.jpg"   
+                courseimg = "../static/images/courses-cover/formal-languages.jpg"
 
             elif course == "הנדסת אבטחה":
-                courseimg = "../static/images/courses-cover/security-engineering.jpg"   
+                courseimg = "../static/images/courses-cover/security-engineering.jpg"
 
             elif course == "ניהול והבטחת איכות בפרויקטי תוכנה":
-                courseimg = "../static/images/courses-cover/quality-assurance.jpg"  
+                courseimg = "../static/images/courses-cover/quality-assurance.jpg"
 
             elif course == "גרפיקה ממוחשבת":
-                courseimg = "../static/images/courses-cover/computer-graphics.jpg"                   
+                courseimg = "../static/images/courses-cover/computer-graphics.jpg"
 
-                
-                
-            newCourse = Course(mentor = request.user.mentor ,courseName = course ,courseYear = year ,maxInterested=request.GET.get('intmax',''),moreInfo=request.GET.get('moreCourseInfo',''))   
+
+
+            newCourse = Course(mentor = request.user.mentor ,courseName = course ,courseYear = year ,maxInterested=request.GET.get('intmax',''),moreInfo=request.GET.get('moreCourseInfo',''))
             if(courseimg != ""):
-                newCourse.img = courseimg  
+                newCourse.img = courseimg
+
             newCourse.save()
 
-    return redirect('show_courses')   
+    return redirect('show_courses')
 
 def update_course(request,course_id):
     course = Course.objects.get(id = course_id)
@@ -277,7 +278,7 @@ def delete_course(request,course_id):
     if course:
         course.delete()
 
-    return redirect('show_courses')    
+    return redirect('show_courses')
 
 
 
@@ -289,8 +290,8 @@ def toggle_interested(request, course_id):
             if course:
                 course.currentIntersted = course.currentIntersted - 1
                 course.save()
-                found.delete()   # מחיקה לטבלה   
-        
+                found.delete()   # מחיקה לטבלה
+
     except:
         current_interested = course.currentIntersted    # חישוב מתעניינים נוכחי בקורס לפי קוד
         max_interested = course.maxInterested          # חישוב מתעניינים מקסימלי בקורס לפי קוד
@@ -300,7 +301,7 @@ def toggle_interested(request, course_id):
                 course.save()
                 newInterestedStudent = InterestedStudent(Student = request.user.student , Course = course )   # הוספה לטבלה
                 newInterestedStudent.save()
-    return redirect('search_courses') 
+    return redirect('search_courses')
 
 
 def get_interested(request, course_id):
@@ -310,20 +311,13 @@ def get_interested(request, course_id):
         if courses:
             if course:
                 args =  {'courses':list(courses.values()) }
-                return JsonResponse(args,safe=False)        
+                return JsonResponse(args,safe=False)
     except:
         print("error")
 
 
-def get_student(request, student_id):  
+def get_student(request, student_id):
     student = Student.objects.get(id = student_id)
     arr = [student.fullName],[student.phone],[student.user.email],[student.user.id],[student.img.url]
     args =  {'student':list(arr) }
     return JsonResponse(args,safe=False)
-
-
-
-  
-          
-
-

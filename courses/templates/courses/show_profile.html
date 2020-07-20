@@ -184,7 +184,17 @@
                         שלחו לי מייל
                       </a>
 
+
+                    {% if user.get_model_type == "מנטור" %}
+
                       <a id="whatsappBtn" class="btn btn-primary" href="https://wa.me/972{{user.phone}}?text=שלום,%20אני%20מתעניינ/ת%20באחד%20הקורסים%20שאת/ה%20מציע/ה%20ב-%20Shenkar%20Mentoring." target="_blank"><i class="fab fa-whatsapp"></i>שלחו לי וואטסאפ</a>
+
+                    {% else %}
+
+                      <a id="whatsappBtn" class="btn btn-primary" href="https://wa.me/972{{user.phone}}?text=שלום,%20אשמח%20לשוחח%20איתך%20בנוגע%20לאחד%20הקורסים%20שלי%20ב-%20Shenkar Mentoring." target="_blank"><i class="fab fa-whatsapp"></i>שלחו לי וואטסאפ</a>
+
+                    {% endif %}
+
 
                   </div>
 

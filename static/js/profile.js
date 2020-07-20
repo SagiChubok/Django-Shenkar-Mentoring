@@ -22,7 +22,7 @@ function readURL(input) {
 $(document).ready(function () {
 
   $("#openSettings").click(function () {
-    if (!$('#openSettings').hasClass("active")) 
+    if (!$('#openSettings').hasClass("active"))
     {
       $('#openSettings').addClass("active");
       $('#profile_settings').addClass("fadeIn-profile_settings");
@@ -30,7 +30,7 @@ $(document).ready(function () {
   });
 
   $("#profile_settings").mouseleave(function () {
-    if ($('#openSettings').hasClass("active")) 
+    if ($('#openSettings').hasClass("active"))
     {
       $('#openSettings').removeClass("active");
       $('#profile_settings').removeClass("fadeIn-profile_settings");
@@ -68,5 +68,14 @@ $(document).ready(function () {
       var text_remaining = text_max - text_length;
       $(".count_message").html(text_length + " / " + text_max);
     });
+
+      //disable enter textarea
+      $('textarea').keypress(function(event) {
+
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+
   }
 });

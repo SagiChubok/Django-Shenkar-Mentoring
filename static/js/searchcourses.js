@@ -1,6 +1,3 @@
-
-
-
 var ajaxResultA;
 var ajaxResultB;
 

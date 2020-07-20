@@ -26,7 +26,7 @@ function showdata(i) {
     "?subject=Shenkar%20Mentoring'> <i class='fa fa-envelope-o' aria-hidden='true'></i> </a>" +
     "<a href='https://wa.me/" +
     phone +
-    "?text=שלום,%20אני%20מתעניינ/ת%20באחד%20הקורסים%20שאת/ה%20מציע/ה%20ב-%20Shenkar%20Mentoring.' target='_blank'> <i class='fa fa-whatsapp' aria-hidden='true'></i> </a> </div> </td> </tr>";
+    "?text=שלום,%20אשמח%20לשוחח%20איתך%20בנוגע%20לאחד%20הקורסים%20שלי%20ב-%20Shenkar Mentoring.' target='_blank'> <i class='fa fa-whatsapp' aria-hidden='true'></i> </a> </div> </td> </tr>";
 
   $("#interested-section").append(tr);
 }
@@ -173,4 +173,14 @@ $(document).ready(function () {
   $("select[name=stdcrs]").change(function () {
     submitUserType(this);
   });
+
+
+  //disable enter textarea
+      $('textarea').keypress(function(event) {
+
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+
 });
