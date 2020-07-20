@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="he">
+
+<head>
+
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta name="author" content="Sagi Chubok & Linoy Chubok">
+
+   <!-- Bootstrap Stylesheet -->
+   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css"
+      integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous" />
+
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600&display=swap" rel="stylesheet" />
+
+   <!-- Fancybox Stylesheet -->
+   <link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}" />
+
+   <!-- Css Stylesheet -->
+   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+
+   <title>Shenkar Mentoring</title>
+
+</head>
+
+<body>
+
+   <header>
+
+      <input type="checkbox" id="navigation" />
+      <div class="mobileMenu">
+         <label class="hamburger" for="navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+         </label>
+         <div id="mobileProfile">
+
+            {% if request.user.groups.all.0.name == "Mentor" %}
+            <img id="mobileImg" src="{{request.user.mentor.img.url}}">
+            <span>{{ request.user.mentor.fullName }}</span>
+            {% elif request.user.groups.all.0.name == "Student" %}
+            <img id="mobileImg" src="{{request.user.student.img.url}}">
+            <span>{{ request.user.student.fullName }}</span>
+            {% endif %}
+
+         </div>
+         <nav>
+            <ul>
+               <li><a class="selectedOn" href="{% url 'show_profile' request.user.id %}"><span class="icons"><i
+                           class="fas fa-user-alt"></i></span>פרופיל</a></li>
+
+               <li><a href="#"><span class="icons"><i class="fas fa-cog"></i></span>הגדרות</a></li>
+               <li><a href="{% url 'logout_user' %}"><span class="icons"><i
+                           class="fas fa-sign-out-alt"></i></span>התנתקות</a></li>
+            </ul>
+         </nav>
+      </div>
+
+      <nav>
+         <ul>
+            <li>
+               <div id="openSettings">
+
+                  <div id="profile_info">
+
+                     <i class="fas fa-chevron-down"></i>
+                     {% if request.user.groups.all.0.name == "Mentor" %}
+                     <span>{{ request.user.mentor.fullName }}</span>
+                     <img class="smallImage" src="{{request.user.mentor.img.url}}">
+                     {% elif request.user.groups.all.0.name == "Student" %}
+                     <span>{{ request.user.student.fullName }}</span>
+                     <img class="smallImage" src="{{request.user.student.img.url}}">
+                     {% endif %}
+
+                  </div>
+
+                  <div id="profile_settings">
+
+                     <ul>
+                        <li>
+                           <a class="selectedOn" href="{% url 'show_profile' request.user.id %}"><i
+                                 class="fas fa-user-alt icons"></i>פרופיל</a>
+                        </li>
+                        <li>
+                           <a href="#"><i class="fas fa-cog icons"></i>הגדרות</a>
+                        </li>
+                        <li>
+                           <a href="{% url 'logout_user' %}"><i class="fas fa-sign-out-alt icons"></i>התנתקות</a>
+                        </li>
+                     </ul>
+
+                  </div>
+
+               </div>
+            </li>
+            {% if request.user.groups.all.0.name == "Mentor" %}
+            <li class="userCoursePage"> <a href="{% url 'show_courses' %}"><i id="my_courses"
+                     class="fas fa-chalkboard-teacher selectedOff"></i></a></li>
+
+            {% elif request.user.groups.all.0.name == "Student" %}
+            <li class="userCoursePage"><a href="{% url 'search_courses' %}"><i id="search_course"
+                     class="selectedMenu fas fa-search selectedOff"></i></a></li>
+            {% endif %}
+
+         </ul>
+      </nav>
+
+      <a id="logo" href="{% url 'homepage' %}"></a>
+
+   </header>
+
+   <main>
+      <div class="coverProfilePage">
+
+         <div id="wrap-all">
+
+
+            {% if request.user.groups.all.0.name == "Mentor" %}
+
+            <img id="profileImg" src="{{request.user.mentor.img.url}}">
+
+
+            {% elif request.user.groups.all.0.name == "Student" %}
+
+            <img id="profileImg" src="{{request.user.student.img.url}}">
+
+            {% endif %}
+
+            <label id="labelFix" for="id_image"><i class="fas fa-camera" data-toggle="tooltip" data-placement="left" title="בחר/י תמונה"></i></label>
+            
+
+            <div id="profile-container">
+
+             <!-- Edit Profile Form -->
+             <form id="myProfileForm" action="{% url 'update_profile' %}" method="GET"
+             enctype="multipart/form-data">
+
+               <div id="text-wrap">
+
+                  {% if request.user.groups.all.0.name == "Mentor" %}
+
+                  <h4>{{request.user.mentor.fullName}}</h4>
+                  <h5> {{request.user.mentor.get_model_type}}</h5>
+
+                  {% elif request.user.groups.all.0.name == "Student" %}
+
+                  <h4>{{request.user.student.fullName}}</h4>
+                  <h5> {{request.user.student.get_model_type}}</h5>
+
+                  {% endif %}
+
+                  <div class="divider div-transparent"></div>
+
+     
+                     <!-- Upload Image -->
+                     <input id="id_image" type="file" name="uploadImage">
+                     <!-- Email -->
+                     <div class="form-group row paddingMail">
+                        <label for="inputEmail" class="col-sm-3 col-form-label"><i class="fas fa-at"></i>מייל</label>
+                        <div class="col-sm-7">
+                           <input type="email" class="form-control" id="mail" name="inputEmail"
+                              value="{{request.user.email}}" required>
+                        </div>
+                     </div>
+                     <!-- Phone -->
+                     <div class="form-group row">
+                        <label for="inputPhone" class="col-sm-3 col-form-label"><i class="fas fa-phone"></i>מספר
+                           טלפון</label>
+                        <div class="col-sm-7">
+
+                           {% if request.user.groups.all.0.name == "Mentor" %}
+                           <input type="tel" class="form-control" id="phone" name="inputPhone" minlength="9"
+                              maxlength="10" value="{{ request.user.mentor.phone}}" required>
+
+                           {% elif request.user.groups.all.0.name == "Student" %}
+                           <input type="tel" class="form-control" id="phone" name="inputPhone" minlength="9"
+                              maxlength="10" value="{{ request.user.student.phone}}" required>
+                           {% endif %}
+
+                        </div>
+                     </div>
+                     <!-- About -->
+                     <div class="form-group row">
+                        <label for="aboutMyself" class="col-sm-3 col-form-label"><i class="fas fa-comment-dots"></i>על
+                           עצמי</label>
+                        <div class="col-sm-7">
+                           {% if request.user.groups.all.0.name == "Mentor" %}
+                           <textarea class="form-control text" name="aboutInput" cols="30" rows="3"
+                              minlength="10" maxlength="200" required>{{request.user.mentor.about}}</textarea>
+                           {% elif request.user.groups.all.0.name == "Student" %}
+                           <textarea class="form-control text" name="aboutInput" cols="30" rows="3"
+                              minlength="10" maxlength="200" required>{{request.user.student.about}}</textarea>
+                           {% endif %}
+                           <span class="pull-right label label-default count_message"></span>
+
+                        </div>
+                     </div>
+      
+               </div>
+
+               <button type="button" id="saveProfileBtn" class="btn btn-primary" onclick="editProfileSubmit()"><i class="fas fa-save"></i>שמירת שינויים</a></button>
+
+            </form>   
+
+            </div>
+         </div>
+
+      </div>
+
+   </main>
+
+   <!-- Bootstrap & jQuery -->
+   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"> </script>
+
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"> </script>
+
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"> </script>
+
+   <script src="https://kit.fontawesome.com/1549b017d1.js" crossorigin="anonymous"></script>
+
+   <!-- Fancybox -->
+   <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
+
+   <!-- JS -->
+   <script src="{% static 'js/validation.js' %}"></script>
+   <script src="{% static 'js/profile.js' %}"></script>
+
+</body>
+
+</html>
