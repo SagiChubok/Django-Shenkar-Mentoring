@@ -38,7 +38,7 @@ function myfoo2(i) {
     ajaxResultA.courses[i].id +
     " data-aos='zoom-in'>   <div class='img-fit'> <img src=" +
     course_img +
-    "> <div class='blackCover'></div></div>    <div class='description'> <h1>הקורס המוצע: " +
+    " alt='coverimg'> <div class='blackCover'></div></div>    <div class='description'> <h1>הקורס המוצע: " +
     course_name +
     "</h1>    <h2><i class='fa fa-user-circle' aria-hidden='true'></i>&nbsp;פורסם על ידי:&nbsp; <a href='../profile/" +
     userid +
@@ -132,11 +132,11 @@ $(document).ready(function () {
   AOS.init();
 
     getcourses();
-  
+
 
 
   $("#stdcrs").change(function () {
-    
+
     getcourses();
 
 
@@ -153,7 +153,7 @@ $(document).ready(function () {
   });
 
   $("#openSettings").click(function () {
-    if (!$('#openSettings').hasClass("active")) 
+    if (!$('#openSettings').hasClass("active"))
     {
       $('#openSettings').addClass("active");
       $('#profile_settings').addClass("fadeIn-profile_settings");
@@ -161,7 +161,7 @@ $(document).ready(function () {
   });
 
   $("#profile_settings").mouseleave(function () {
-    if ($('#openSettings').hasClass("active")) 
+    if ($('#openSettings').hasClass("active"))
     {
       $('#openSettings').removeClass("active");
       $('#profile_settings').removeClass("fadeIn-profile_settings");

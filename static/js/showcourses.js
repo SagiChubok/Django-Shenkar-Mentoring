@@ -13,7 +13,7 @@ function showdata(i) {
   var imgurl = ajaxResultB.student[4];
 
   var tr =
-    "<tr data-aos='zoom-in-down'> <td><img class='smallImage' src= \"" +
+    "<tr data-aos='zoom-in-down'> <td><img alt='smallImage' class='smallImage' src= \"" +
     imgurl +
     '"></td>' +
     "<td> <a href='../profile/" +
@@ -26,7 +26,7 @@ function showdata(i) {
     "?subject=Shenkar%20Mentoring'> <i class='fa fa-envelope-o' aria-hidden='true'></i> </a>" +
     "<a href='https://wa.me/" +
     phone +
-    "?text=Shenkar Mentoring -שלום, אני מתעניין באחד הקורסים שאת/ה מציע/ה ב' target='_blank'> <i class='fa fa-whatsapp' aria-hidden='true'></i> </a> </div> </td> </tr>";
+    "?text=שלום,%20אני%20מתעניינ/ת%20באחד%20הקורסים%20שאת/ה%20מציע/ה%20ב-%20Shenkar%20Mentoring.' target='_blank'> <i class='fa fa-whatsapp' aria-hidden='true'></i> </a> </div> </td> </tr>";
 
   $("#interested-section").append(tr);
 }
@@ -118,9 +118,9 @@ $(document).ready(function () {
 
   clearModal();
 
-  
+
   $("#openSettings").click(function () {
-    if (!$('#openSettings').hasClass("active")) 
+    if (!$('#openSettings').hasClass("active"))
     {
       $('#openSettings').addClass("active");
       $('#profile_settings').addClass("fadeIn-profile_settings");
@@ -128,7 +128,7 @@ $(document).ready(function () {
   });
 
   $("#profile_settings").mouseleave(function () {
-    if ($('#openSettings').hasClass("active")) 
+    if ($('#openSettings').hasClass("active"))
     {
       $('#openSettings').removeClass("active");
       $('#profile_settings').removeClass("fadeIn-profile_settings");

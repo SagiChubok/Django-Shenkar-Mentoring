@@ -43,10 +43,10 @@
          <div id="mobileProfile">
 
             {% if request.user.groups.all.0.name == "Mentor" %}
-            <img id="mobileImg" src="{{request.user.mentor.img.url}}">
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.mentor.img.url}}">
             <span>{{ request.user.mentor.fullName }}</span>
             {% elif request.user.groups.all.0.name == "Student" %}
-            <img id="mobileImg" src="{{request.user.student.img.url}}">
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.student.img.url}}">
             <span>{{ request.user.student.fullName }}</span>
             {% endif %}
 
@@ -73,10 +73,10 @@
                      <i class="fas fa-chevron-down"></i>
                      {% if request.user.groups.all.0.name == "Mentor" %}
                      <span>{{ request.user.mentor.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.mentor.img.url}}">
+                     <img class="smallImage" alt="smallImage" src="{{request.user.mentor.img.url}}">
                      {% elif request.user.groups.all.0.name == "Student" %}
                      <span>{{ request.user.student.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.student.img.url}}">
+                     <img class="smallImage" alt="smallImage" src="{{request.user.student.img.url}}">
                      {% endif %}
 
                   </div>
@@ -126,10 +126,10 @@
                {% if not courses %}
                <span id="noInfo" class="emptyresults" >אין נתונים להצגה</span>
                {% endif %}
-               
+
             <table>
 
-         
+
 
                {% for course in courses %}
                <tr>
@@ -177,13 +177,13 @@
                         <div class="col-sm-12">
                            <label for="stdyear">בחר/י שנת לימודים:</label>
                            <select class="form-control" id="stdyear" name="stdyear" onchange="show()">
-                              <option disabled selected value></option>
+                              <option disabled selected value>&nbsp;</option>
                            </select>
                         </div>
                         <div class="col-sm-12">
                            <label for="stdcrs">בחר/י קורס:</label>
                            <select class="form-control" id="stdcrs" name="stdcrs">
-                              <option disabled selected value></option>
+                              <option disabled selected value>&nbsp;</option>
                            </select>
                         </div>
                         <div class="col-sm-12">
@@ -192,8 +192,8 @@
                               required />
                         </div>
                         <div class="col-sm-12">
-                           <label for="address">פרטים נוספים:</label>
-                           <textarea class="form-control text" name="moreCourseInfo" cols="30" rows="5"
+                           <label for="moreCourseInfo">פרטים נוספים:</label>
+                           <textarea class="form-control text" id="moreCourseInfo" name="moreCourseInfo" cols="30" rows="5"
                            minlength="10" maxlength="200"  required></textarea>
                            <span class="pull-right label label-default count_message"></span>
 
@@ -222,7 +222,7 @@
                      <br>
                      <div class="row">
                         <div class="col-sm-12">
-                           <label for="address">פרטים נוספים:</label>
+                           <label for="updateinfocrs">פרטים נוספים:</label>
                            <textarea id="updateinfocrs" class="form-control" name="updateinfocrs" cols="30" rows="5"
                            minlength="10" maxlength="200"></textarea>
                            <span class="pull-right label label-default count_message2"></span>
@@ -293,7 +293,7 @@
    <script src="{% static 'js/showcourses.js' %}"></script>
 
    {% for message in messages %}
-   <script>alert("{{ message }}")</script> 
+   <script>alert("{{ message }}")</script>
    {% endfor %}
 
 </body>

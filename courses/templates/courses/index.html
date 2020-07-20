@@ -121,13 +121,15 @@
                      </button>
                      <br>
 
-                     <label for="inputUsername">תעודת זהות:</label>
+                     <label for="usernameInput">תעודת זהות:</label>
                      <input type="text" class="form-control" name="username" id="usernameInput" minlength="9"
                         maxlength="9" required />
 
-                     <label for="inputPassword">סיסמה:</label>
+
+                     <label for="passwordInput">סיסמה:</label>
                      <input type="password" class="form-control" name="password" id="passwordInput" minlength="4"
                         maxlength="12" required />
+
 
                   </div>
 
@@ -257,7 +259,7 @@
 
 
    {% for message in messages %}
-   <script>alert("{{ message }}")</script> 
+   <script>alert("{{ message }}")</script>
    {% endfor %}
 
 </body>

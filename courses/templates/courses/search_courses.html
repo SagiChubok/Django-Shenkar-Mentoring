@@ -38,10 +38,10 @@
          </label>
          <div id="mobileProfile">
             {% if request.user.groups.all.0.name == "Mentor" %}
-            <img id="mobileImg" src="{{request.user.mentor.img.url}}" />
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.mentor.img.url}}" />
             <span>{{ request.user.mentor.fullName }}</span>
             {% elif request.user.groups.all.0.name == "Student" %}
-            <img id="mobileImg" src="{{request.user.student.img.url}}" />
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.student.img.url}}" />
             <span>{{ request.user.student.fullName }}</span>
             {% endif %}
          </div>
@@ -71,10 +71,10 @@
                      <i class="fas fa-chevron-down"></i>
                      {% if request.user.groups.all.0.name == "Mentor" %}
                      <span>{{ request.user.mentor.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.mentor.img.url}}" />
+                     <img class="smallImage" alt="smallImage" src="{{request.user.mentor.img.url}}" />
                      {% elif request.user.groups.all.0.name == "Student" %}
                      <span>{{ request.user.student.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.student.img.url}}" />
+                     <img class="smallImage" alt="smallImage" src="{{request.user.student.img.url}}" />
                      {% endif %}
                   </div>
 
@@ -147,7 +147,7 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"></script>
-      
+
    <!-- Fontawesome Kit -->
    <script src="https://kit.fontawesome.com/1549b017d1.js" crossorigin="anonymous"></script>
 

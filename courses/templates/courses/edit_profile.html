@@ -43,10 +43,10 @@
          <div id="mobileProfile">
 
             {% if request.user.groups.all.0.name == "Mentor" %}
-            <img id="mobileImg" src="{{request.user.mentor.img.url}}">
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.mentor.img.url}}">
             <span>{{ request.user.mentor.fullName }}</span>
             {% elif request.user.groups.all.0.name == "Student" %}
-            <img id="mobileImg" src="{{request.user.student.img.url}}">
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.student.img.url}}">
             <span>{{ request.user.student.fullName }}</span>
             {% endif %}
 
@@ -73,10 +73,10 @@
                      <i class="fas fa-chevron-down"></i>
                      {% if request.user.groups.all.0.name == "Mentor" %}
                      <span>{{ request.user.mentor.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.mentor.img.url}}">
+                     <img class="smallImage" alt="smallImage" src="{{request.user.mentor.img.url}}">
                      {% elif request.user.groups.all.0.name == "Student" %}
                      <span>{{ request.user.student.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.student.img.url}}">
+                     <img class="smallImage" alt="smallImage" src="{{request.user.student.img.url}}">
                      {% endif %}
 
                   </div>
@@ -124,17 +124,17 @@
 
             {% if request.user.groups.all.0.name == "Mentor" %}
 
-            <img id="profileImg" src="{{request.user.mentor.img.url}}">
+            <img id="profileImg" alt="profileImg" src="{{request.user.mentor.img.url}}">
 
 
             {% elif request.user.groups.all.0.name == "Student" %}
 
-            <img id="profileImg" src="{{request.user.student.img.url}}">
+            <img id="profileImg" alt="profileImg" src="{{request.user.student.img.url}}">
 
             {% endif %}
 
             <label id="labelFix" for="id_image"><i class="fas fa-camera" data-toggle="tooltip" data-placement="left" title="בחר/י תמונה"></i></label>
-            
+
 
             <div id="profile-container">
 
@@ -158,12 +158,12 @@
 
                   <div class="divider div-transparent"></div>
 
-     
+
                      <!-- Upload Image -->
                      <input id="id_image" type="file" name="uploadImage">
                      <!-- Email -->
                      <div class="form-group row paddingMail">
-                        <label for="inputEmail" class="col-sm-3 col-form-label"><i class="fas fa-at"></i>מייל</label>
+                        <label for="mail" class="col-sm-3 col-form-label"><i class="fas fa-at"></i>מייל</label>
                         <div class="col-sm-7">
                            <input type="email" class="form-control" id="mail" name="inputEmail"
                               value="{{request.user.email}}" required>
@@ -171,7 +171,7 @@
                      </div>
                      <!-- Phone -->
                      <div class="form-group row">
-                        <label for="inputPhone" class="col-sm-3 col-form-label"><i class="fas fa-phone"></i>מספר
+                        <label for="phone" class="col-sm-3 col-form-label"><i class="fas fa-phone"></i>מספר
                            טלפון</label>
                         <div class="col-sm-7">
 
@@ -188,26 +188,26 @@
                      </div>
                      <!-- About -->
                      <div class="form-group row">
-                        <label for="aboutMyself" class="col-sm-3 col-form-label"><i class="fas fa-comment-dots"></i>על
+                        <label for="aboutInput" class="col-sm-3 col-form-label"><i class="fas fa-comment-dots"></i>על
                            עצמי</label>
                         <div class="col-sm-7">
                            {% if request.user.groups.all.0.name == "Mentor" %}
-                           <textarea class="form-control text" name="aboutInput" cols="30" rows="3"
+                           <textarea class="form-control text" id="aboutInput" name="aboutInput" cols="30" rows="3"
                               minlength="10" maxlength="200" required>{{request.user.mentor.about}}</textarea>
                            {% elif request.user.groups.all.0.name == "Student" %}
-                           <textarea class="form-control text" name="aboutInput" cols="30" rows="3"
+                           <textarea class="form-control text" id="aboutInput" name="aboutInput" cols="30" rows="3"
                               minlength="10" maxlength="200" required>{{request.user.student.about}}</textarea>
                            {% endif %}
                            <span class="pull-right label label-default count_message"></span>
 
                         </div>
                      </div>
-      
+
                </div>
 
-               <button type="button" id="saveProfileBtn" class="btn btn-primary" onclick="editProfileSubmit()"><i class="fas fa-save"></i>שמירת שינויים</a></button>
+               <button type="button" id="saveProfileBtn" class="btn btn-primary" onclick="editProfileSubmit()"><i class="fas fa-save"></i>שמירת שינויים</button>
 
-            </form>   
+            </form>
 
             </div>
          </div>

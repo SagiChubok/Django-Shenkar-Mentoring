@@ -44,10 +44,10 @@
          <div id="mobileProfile">
 
             {% if request.user.groups.all.0.name == "Mentor" %}
-            <img id="mobileImg" src="{{request.user.mentor.img.url}}">
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.mentor.img.url}}">
             <span>{{ request.user.mentor.fullName }}</span>
             {% elif request.user.groups.all.0.name == "Student" %}
-            <img id="mobileImg" src="{{request.user.student.img.url}}">
+            <img id="mobileImg" alt="mobileImg" src="{{request.user.student.img.url}}">
             <span>{{ request.user.student.fullName }}</span>
             {% endif %}
 
@@ -60,10 +60,10 @@
 
                {% else %}
                <li><a href="{% url 'show_profile' request.user.id %}"><span class="icons"><i
-                  class="fas fa-user-alt"></i></span>פרופיל</a></li>  
+                  class="fas fa-user-alt"></i></span>פרופיל</a></li>
 
                {% endif %}
-               
+
                <li><a href="#"><span class="icons"><i class="fas fa-cog"></i></span>הגדרות</a></li>
                <li><a href="{% url 'logout_user' %}"><span class="icons"><i
                            class="fas fa-sign-out-alt"></i></span>התנתקות</a></li>
@@ -81,10 +81,10 @@
                      <i class="fas fa-chevron-down"></i>
                      {% if request.user.groups.all.0.name == "Mentor" %}
                      <span>{{ request.user.mentor.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.mentor.img.url}}">
+                     <img class="smallImage" alt="smallImage" src="{{request.user.mentor.img.url}}">
                      {% elif request.user.groups.all.0.name == "Student" %}
                      <span>{{ request.user.student.fullName }}</span>
-                     <img class="smallImage" src="{{request.user.student.img.url}}">
+                     <img class="smallImage" alt="smallImage" src="{{request.user.student.img.url}}">
                      {% endif %}
 
                   </div>
@@ -132,12 +132,12 @@
       <div class="coverProfilePage">
 
          <div id="wrap-all">
-            
+
             <!-- Image with Fancybox -->
             <a data-fancybox="gallery" href="{{user.img.url}}">
-              
-               <img id="profileImg" src="{{user.img.url}}">
-            
+
+               <img alt="profileImg" id="profileImg" src="{{user.img.url}}">
+
             </a>
 
             <div id="profile-container">
@@ -150,12 +150,12 @@
                   <h5> {{user.get_model_type}}</h5>
 
                   <div class="divider div-transparent"></div>
-      
-   
+
+
                   <p id="about">
-                     {{user.about}}    
+                     {{user.about}}
                   </p>
-              
+
                  {% if user.get_model_type == "מנטור" %}
                    {% if courses %}
                      <h5 id="coursesTitle">קורסים מוצעים:</h5>
@@ -164,43 +164,37 @@
 
                         {% if forloop.last %}
                            {{course.courseName}}
-                        {% else %}   
+                        {% else %}
                            {{course.courseName}},
                         {% endif %}
 
                      {% endfor %}
-                  </p>  
+                  </p>
                   {% endif %}
                  {% endif %}
 
-             </div>    
-                  
-                  
-      
+             </div>
+
+
+
                   <div id="btns-warp">
 
-                     <a href="mailto:{{user.user.email}}?subject=Shenkar%20Mentoring">  
-                     <button type="button" id="mailBtn" class="btn btn-primary">
+                     <a id="mailBtn" class="btn btn-primary" href="mailto:{{user.user.email}}?subject=Shenkar%20Mentoring">
                         <i class="far fa-envelope"></i>
                         שלחו לי מייל
-                     </button>
                       </a>
-                     
-                      <a href="https://wa.me/972{{user.phone}}?text=שלום, אני מתעניינ/ת באחד הקורסים שאת/ה מציע/ה ב- Shenkar Mentoring." target="_blank">
-                     <button type="button" id="whatsappBtn" class="btn btn-primary">
-                           <i class="fab fa-whatsapp"></i>שלחו לי וואטסאפ
-                        </button>
-                     </a>
+
+                      <a id="whatsappBtn" class="btn btn-primary" href="https://wa.me/972{{user.phone}}?text=שלום,%20אני%20מתעניינ/ת%20באחד%20הקורסים%20שאת/ה%20מציע/ה%20ב-%20Shenkar%20Mentoring." target="_blank"><i class="fab fa-whatsapp"></i>שלחו לי וואטסאפ</a>
 
                   </div>
-      
-      
+
+
             </div>
          </div>
 
       </div>
 
- 
+
 
    </main>
 
@@ -218,10 +212,10 @@
 
    <!-- Fancybox -->
    <script src="{% static 'js/jquery.fancybox.min.js' %}"></script>
-   
+
    <!-- Fontawesome Kit -->
    <script src="https://kit.fontawesome.com/1549b017d1.js" crossorigin="anonymous"></script>
- 
+
    <!-- JS -->
    <script src="{% static 'js/profile.js' %}"></script>
 
